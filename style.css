@@ -1,0 +1,154 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fef6ff;
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+    color: #4a3c5a;
+}
+
+.game-shell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+}
+
+.game-title {
+    font-size: 1.8rem;
+    margin: 0;
+    letter-spacing: 0.1em;
+}
+
+canvas {
+    width: min(90vw, 480px);
+    height: auto;
+    max-height: 640px;
+    border-radius: 16px;
+    image-rendering: pixelated;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.game-controls {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.control-btn img {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto;
+}
+
+.control-btn.rotate-ccw img {
+    transform: scaleX(-1);
+}
+
+.control-btn:focus-visible {
+    outline: 2px solid #ff8ec7;
+    border-radius: 12px;
+}
+
+.level-menu-btn {
+    margin-top: 8px;
+    padding: 8px 24px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ffa8de, #ffc671);
+    color: #4a3c5a;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.level-menu-btn:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.level-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 10;
+}
+
+.level-overlay.hidden {
+    display: none;
+}
+
+.level-panel {
+    width: min(90vw, 360px);
+    background: #fff6fb;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.level-panel h2 {
+    margin: 0 0 12px;
+    font-size: 1.5rem;
+    color: #e05aa6;
+}
+
+.level-description {
+    margin: 0 0 20px;
+    font-size: 0.95rem;
+}
+
+.level-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+#levelSlider {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.start-level-btn {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff85c1, #ffb347);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(255, 133, 193, 0.35);
+}
+
+.start-level-btn:focus-visible {
+    outline: 2px solid #ffdcf3;
+    outline-offset: 2px;
+}
