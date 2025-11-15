@@ -174,14 +174,8 @@ function setupInputHandlers() {
 
     downButton.addEventListener("pointerdown", (event) => {
         event.preventDefault();
-        fastDrop = true;
+        hardDrop();
         vibrateTap();
-    });
-
-    ["pointerup", "pointerleave", "pointercancel"].forEach((evt) => {
-        downButton.addEventListener(evt, () => {
-            fastDrop = false;
-        });
     });
 
     rotateCWButton.addEventListener("pointerdown", (event) => {
@@ -427,6 +421,17 @@ function tryMoveCapsule(rowOffset, colOffset) {
     activeCapsule.row += rowOffset;
     activeCapsule.col += colOffset;
     return true;
+}
+
+function hardDrop() {
+    if (!activeCapsule || gameOver) {
+        return;
+    }
+    while (tryMoveCapsule(1, 0)) {
+        // keep moving down
+    }
+    lockCapsule();
+    lastDropTime = performance.now();
 }
 
 function rotateCapsule(direction = "cw") {
