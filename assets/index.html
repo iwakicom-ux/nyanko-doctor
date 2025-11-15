@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>にゃんこドクター</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="game-shell">
+        <h1 class="game-title">にゃんこドクター</h1>
+        <canvas id="gameCanvas" width="480" height="640" aria-label="にゃんこドクターのプレイ画面"></canvas>
+        <div class="game-controls" aria-label="操作ボタン">
+            <div class="controller-surface">
+                <div class="dpad">
+                    <button id="btnLeft" class="control-btn" aria-label="左移動">
+                        <img src="assets/btn_left.png" alt="左移動">
+                    </button>
+                    <button id="btnRight" class="control-btn" aria-label="右移動">
+                        <img src="assets/btn_right.png" alt="右移動">
+                    </button>
+                    <button id="btnDown" class="control-btn dpad-down" aria-label="高速落下">
+                        <img src="assets/btn_drop.png" alt="高速落下">
+                    </button>
+                </div>
+                <div class="rotate-stack">
+                    <button id="btnRotateCCW" class="control-btn rotate-ccw" aria-label="左回転">
+                        <img src="assets/btn_rotate.png" alt="左回転">
+                    </button>
+                    <button id="btnRotateCW" class="control-btn" aria-label="右回転">
+                        <img src="assets/btn_rotate.png" alt="右回転">
+                    </button>
+                </div>
+                <button id="btnVibration" class="toggle-btn" aria-pressed="true" aria-label="振動のオンオフ">
+                    バイブ: ON
+                </button>
+            </div>
+        </div>
+        <button id="btnLevel" class="level-menu-btn" aria-label="レベル選択画面を開く">レベル選択</button>
+    </main>
+    <div id="levelOverlay" class="level-overlay" role="dialog" aria-modal="true" aria-label="レベル選択画面">
+        <div class="level-panel">
+            <h2>レベルを選んでスタート</h2>
+            <p class="level-description">レベル0はスカスカ、レベル20はウイルスがいっぱい！</p>
+            <label for="levelSlider" class="level-label">
+                レベル: <span id="levelValue">0</span>
+            </label>
+            <input id="levelSlider" type="range" min="0" max="20" value="0">
+            <button id="btnStartLevel" class="start-level-btn">スタート</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
