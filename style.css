@@ -1,3 +1,9 @@
+ :root {
+    --control-size: 96px;
+    --control-gap: 24px;
+    --control-radius: 24px;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -38,35 +44,35 @@ canvas {
 
 .game-controls {
     width: 100%;
-    max-width: 480px;
+    max-width: min(560px, 95vw);
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 24px;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--control-gap);
+    flex-wrap: nowrap;
 }
 
 .dpad,
 .rotate-group {
-    flex: 1 1 200px;
+    flex: 1 1 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: var(--control-gap);
 }
 
 .dpad-row {
     display: flex;
-    gap: 16px;
+    gap: var(--control-gap);
 }
 
 .control-btn {
     border: none;
     background: rgba(17, 12, 46, 0.15);
-    border-radius: 24px;
+    border-radius: var(--control-radius);
     padding: 12px;
-    width: 96px;
-    height: 96px;
+    width: var(--control-size);
+    height: var(--control-size);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,24 +82,22 @@ canvas {
 }
 
 .control-btn img {
-    width: 70px;
-    height: 70px;
+    width: calc(var(--control-size) * 0.72);
+    height: calc(var(--control-size) * 0.72);
     display: block;
 }
 
 .dpad-down {
-    width: 120px;
+    width: calc(var(--control-size) * 1.2);
 }
 
 .rotate-group {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
 }
 
 .rotate-group .control-btn {
-    width: 90px;
-    height: 90px;
+    width: calc(var(--control-size) * 0.9);
+    height: calc(var(--control-size) * 0.9);
 }
 
 .control-btn.rotate-ccw img {
@@ -139,30 +143,17 @@ canvas {
     outline-offset: 2px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 540px) {
+    :root {
+        --control-size: clamp(72px, 22vw, 96px);
+        --control-gap: clamp(12px, 4vw, 20px);
+        --control-radius: clamp(18px, 5vw, 24px);
+    }
     .game-controls {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .control-btn {
-        width: clamp(80px, 24vw, 96px);
-        height: clamp(80px, 24vw, 96px);
-    }
-
-    .control-btn img {
-        width: clamp(56px, 16vw, 70px);
-        height: clamp(56px, 16vw, 70px);
-    }
-
-    .dpad-down {
-        width: clamp(96px, 32vw, 120px);
-    }
-
-    .rotate-group {
-        width: 100%;
+        gap: var(--control-gap);
     }
 }
+
 
 .level-overlay {
     position: fixed;
