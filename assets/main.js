@@ -24,6 +24,14 @@ const SPAWN_ORIENTATIONS = ["right", "down"];
 const HAPTIC_TAP_DURATION = 35;
 const HAPTIC_CLEAR_PATTERN = [25, 40, 25];
 
+window.addEventListener(
+    "contextmenu",
+    (event) => {
+        event.preventDefault();
+    },
+    { passive: false }
+);
+
 const COLOR_CODES = { red: 1, blue: 2, yellow: 3 };
 const COLOR_NAMES = Object.keys(COLOR_CODES);
 const ORIENTATIONS = ["up", "right", "down", "left"];
@@ -148,6 +156,9 @@ function setupInputHandlers() {
     const rotateCWButton = document.getElementById("btnRotateCW");
     const vibrationButton = document.getElementById("btnVibration");
     updateVibrationButton();
+    document.querySelectorAll(".control-btn img").forEach((img) => {
+        img.setAttribute("draggable", "false");
+    });
 
     leftButton.addEventListener("pointerdown", (event) => {
         event.preventDefault();
@@ -273,16 +284,6 @@ function showLevelOverlay() {
 
 function hideLevelOverlay() {
     levelOverlay?.classList.add("hidden");
-    window.addEventListener(
-        "contextmenu",
-        (event) => {
-            event.preventDefault();
-        },
-        { passive: false }
-    );
-    document.querySelectorAll(".control-btn img").forEach((img) => {
-        img.setAttribute("draggable", "false");
-    });
 }
 
 function startLevel(level) {
