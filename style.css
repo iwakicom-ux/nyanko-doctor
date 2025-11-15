@@ -1,9 +1,7 @@
- :root {
+:root {
     --controller-width: 520px;
     --control-size: 96px;
-    --control-gap: 24px;
-    --control-radius: 24px;
-    --controller-aspect: 2.6;
+    --controller-aspect: 11 / 5;
 }
 
 * {
@@ -46,37 +44,83 @@ canvas {
 
 .game-controls {
     width: min(var(--controller-width), 95vw);
-    position: relative;
+}
+
+.controller-wrapper {
+    width: 100%;
 }
 
 .controller-surface {
     position: relative;
     width: 100%;
     aspect-ratio: var(--controller-aspect);
-    background: rgba(15, 12, 34, 0.18);
+    background: rgba(15, 12, 34, 0.2);
     border-radius: 28px;
-    padding: 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    box-shadow: inset 0 0 0 2px rgba(17, 12, 46, 0.12);
+}
+
+.control-btn,
+.toggle-btn {
+    position: absolute;
+    border: none;
+    border-radius: 24px;
+    width: var(--control-size);
+    aspect-ratio: 1;
+    background: rgba(17, 12, 46, 0.18);
     box-shadow: inset 0 0 0 2px rgba(17, 12, 46, 0.15);
-}
-
-.dpad {
-    position: relative;
-    width: 45%;
-    height: 100%;
-}
-
-.rotate-stack {
-    position: relative;
-    width: 35%;
-    height: 100%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--control-gap);
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+#btnLeft {
+    left: 14%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#btnRight {
+    left: 34%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#btnDown {
+    left: 24%;
+    top: 78%;
+    transform: translate(-50%, -50%);
+    width: calc(var(--control-size) * 1.15);
+}
+
+#btnRotateCCW {
+    left: 66%;
+    top: 38%;
+    transform: translate(-50%, -50%);
+}
+
+#btnRotateCW {
+    left: 84%;
+    top: 58%;
+    transform: translate(-50%, -50%);
+}
+
+#btnVibration {
+    width: clamp(90px, 18vw, 130px);
+    aspect-ratio: 2.8 / 1;
+    bottom: 8%;
+    right: 6%;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    font-weight: 600;
+    background: #222b61;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#btnVibration[aria-pressed="false"] {
+    background: #707bba;
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .control-btn {
@@ -95,9 +139,11 @@ canvas {
 }
 
 .control-btn img {
-    width: calc(var(--control-size) * 0.72);
-    height: calc(var(--control-size) * 0.72);
-    display: block;
+    width: calc(var(--control-size) * 0.7);
+    height: calc(var(--control-size) * 0.7);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .control-btn {
@@ -186,10 +232,8 @@ canvas {
 
 @media (max-width: 540px) {
     :root {
-        --controller-width: 92vw;
-        --control-size: clamp(60px, 18vw, 96px);
-        --control-gap: clamp(10px, 3vw, 18px);
-        --control-radius: clamp(16px, 4vw, 24px);
+        --controller-width: 94vw;
+        --control-size: clamp(56px, 17vw, 96px);
     }
 }
 
