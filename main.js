@@ -21,6 +21,8 @@ const PREVIEW_ORIGIN = {
     y: FRAME_POSITION.y + 24
 };
 const SPAWN_ORIENTATIONS = ["right", "down"];
+const HAPTIC_TAP_DURATION = 35;
+const HAPTIC_CLEAR_PATTERN = [25, 40, 25];
 
 const COLOR_CODES = { red: 1, blue: 2, yellow: 3 };
 const COLOR_NAMES = Object.keys(COLOR_CODES);
@@ -82,6 +84,9 @@ let capsuleVariantBoard = createVariantBoard();
 let levelCleared = false;
 let pendingLevelClear = false;
 let nextCapsuleData = null;
+let vibrationEnabled = true;
+const supportsVibration =
+    typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
 const MIN_LEVEL = 0;
 const MAX_LEVEL = 20;
 
@@ -141,20 +146,25 @@ function setupInputHandlers() {
     const downButton = document.getElementById("btnDown");
     const rotateCCWButton = document.getElementById("btnRotateCCW");
     const rotateCWButton = document.getElementById("btnRotateCW");
+    const vibrationButton = document.getElementById("btnVibration");
+    updateVibrationButton();
 
     leftButton.addEventListener("pointerdown", (event) => {
         event.preventDefault();
         moveCapsule(-1);
+        vibrateTap();
     });
 
     rightButton.addEventListener("pointerdown", (event) => {
         event.preventDefault();
         moveCapsule(1);
+        vibrateTap();
     });
 
     downButton.addEventListener("pointerdown", (event) => {
         event.preventDefault();
         fastDrop = true;
+        vibrateTap();
     });
 
     ["pointerup", "pointerleave", "pointercancel"].forEach((evt) => {
@@ -166,11 +176,20 @@ function setupInputHandlers() {
     rotateCWButton.addEventListener("pointerdown", (event) => {
         event.preventDefault();
         rotateCapsule("cw");
+        vibrateTap();
     });
 
     rotateCCWButton.addEventListener("pointerdown", (event) => {
         event.preventDefault();
         rotateCapsule("ccw");
+        vibrateTap();
+    });
+
+    vibrationButton?.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        vibrationEnabled = !vibrationEnabled;
+        updateVibrationButton();
+        vibrateTap();
     });
 
     window.addEventListener("keydown", (event) => {
@@ -185,23 +204,28 @@ function setupInputHandlers() {
         switch (event.key) {
             case "ArrowLeft":
                 moveCapsule(-1);
+                vibrateTap();
                 break;
             case "ArrowRight":
                 moveCapsule(1);
+                vibrateTap();
                 break;
             case "ArrowUp":
             case "x":
             case "X":
                 rotateCapsule("cw");
+                vibrateTap();
                 break;
             case " ":
             case "Spacebar":
             case "ArrowDown":
                 fastDrop = true;
+                vibrateTap();
                 break;
             case "z":
             case "Z":
                 rotateCapsule("ccw");
+                vibrateTap();
                 break;
             default:
                 break;
@@ -578,6 +602,7 @@ function clearMatches() {
     }
 
     if (clearedCount > 0) {
+        vibrateClear();
         remainingViruses = countViruses();
         gravityPending = true;
         if (remainingViruses === 0) {
@@ -1028,6 +1053,30 @@ function drawLevelClear() {
     ctx.font = "20px 'Fredoka', sans-serif";
     ctx.fillText(`Tap to go to LEVEL ${nextLevel}`, CANVAS_WIDTH / 2, FIELD_ORIGIN.y + 190);
     ctx.textAlign = "start";
+}
+
+function vibratePattern(pattern) {
+    if (!vibrationEnabled || !supportsVibration) {
+        return;
+    }
+    navigator.vibrate(pattern);
+}
+
+function vibrateTap() {
+    vibratePattern(HAPTIC_TAP_DURATION);
+}
+
+function vibrateClear() {
+    vibratePattern(HAPTIC_CLEAR_PATTERN);
+}
+
+function updateVibrationButton() {
+    const button = document.getElementById("btnVibration");
+    if (!button) {
+        return;
+    }
+    button.textContent = vibrationEnabled ? "バイブ: ON" : "バイブ: OFF";
+    button.setAttribute("aria-pressed", String(vibrationEnabled));
 }
 
 function removeBoardObject(row, col) {
